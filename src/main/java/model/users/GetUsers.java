@@ -1,11 +1,11 @@
-package org.users;
+package model.users;
 import lombok.Getter;
 
 @Getter
-public class DeleteUsers {
+public class GetUsers {
     private String token;
 
-    public DeleteUsers(String token) {
+    public GetUsers(String token) {
         this.token = token;
     }
 }

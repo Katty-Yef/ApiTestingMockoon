@@ -1,4 +1,4 @@
-package org.users;
+package model.users;
 import lombok.Getter;
 
 @Getter
