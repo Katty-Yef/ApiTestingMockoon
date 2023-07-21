@@ -1,9 +1,7 @@
-package model.auth;
-import lombok.Getter;
+package models.requestModels.auth;
 import lombok.Setter;
 
 @Setter
-@Getter
 public class PostLogin {
     private String email;
     private String password;

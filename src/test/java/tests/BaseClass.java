@@ -1,7 +1,9 @@
+package tests;
+
 import com.github.javafaker.Faker;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import model.auth.PostLogin;
+import models.requestModels.auth.PostLogin;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -17,11 +19,11 @@ import static io.restassured.RestAssured.given;
 public abstract class BaseClass<T> {
 
     protected abstract T createEndpointInstance();
+
     protected T model;
     protected String endpoint;
     protected String api;
     protected static Properties properties;
-    protected String token;
     protected Faker faker;
     protected static final Logger LOGGER = Logger.getLogger(BaseClass.class.getName());
 
@@ -38,8 +40,7 @@ public abstract class BaseClass<T> {
             InputStream input = new FileInputStream("src/main/resources/config.properties");
             properties = new Properties();
             properties.load(input);
-        }
-        catch (IOException io) {
+        } catch (IOException io) {
             io.printStackTrace();
         }
     }
@@ -49,16 +50,15 @@ public abstract class BaseClass<T> {
         postLogin.setPassword(properties.getProperty("password"));
         postLogin.setEmail(properties.getProperty("email"));
 
-        Response response =
-            given().
-                    contentType(ContentType.JSON).
-                    body(postLogin).
-            when().
-                    post(properties.getProperty("baseUrl") + properties.getProperty("postLogin")).
-            then().
-                    extract().response();
-        token = response.path("accessToken");
-        return token;
+        Response response = given()
+            .contentType(ContentType.JSON)
+            .body(postLogin)
+        .when()
+            .post(properties.getProperty("baseUrl") + properties.getProperty("postLogin"))
+        .then()
+            .extract().response();
+
+        return "Bearer " + response.path("accessToken");
     }
 
     @BeforeMethod
@@ -72,5 +72,4 @@ public abstract class BaseClass<T> {
     public void tearDown() {
         LOGGER.info("Test class is finished");
     }
-
 }

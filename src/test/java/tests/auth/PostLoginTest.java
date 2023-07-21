@@ -1,5 +1,7 @@
-import io.restassured.response.Response;
-import model.auth.PostLogin;
+package tests.auth;
+
+import tests.BaseClass;
+import models.requestModels.auth.PostLogin;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
@@ -23,13 +25,13 @@ public class PostLoginTest extends BaseClass<PostLogin> {
         model.setPassword(properties.getProperty("password"));
         model.setEmail(properties.getProperty("email"));
 
-        given().
-                contentType(ContentType.JSON).
-                body(model).
-        when().
-                post(api).
-        then().
-                statusCode(200);
+        given()
+            .contentType(ContentType.JSON)
+            .body(model)
+        .when()
+            .post(api)
+        .then()
+            .statusCode(200);
     }
 
     @Test
@@ -37,16 +39,13 @@ public class PostLoginTest extends BaseClass<PostLogin> {
         model.setPassword(properties.getProperty("password"));
         model.setEmail(properties.getProperty("email"));
 
-        Response response =
-            given().
-                    contentType(ContentType.JSON).
-                    body(model).
-            when().
-                    post(api).
-            then().
-                    extract().response();
-
-        assert(response.body().asString().contains("accessToken"));
+        given()
+            .contentType(ContentType.JSON)
+            .body(model)
+        .when()
+            .post(api)
+        .then()
+            .extract().response().body().asString().contains("accessToken");
     }
 
     @Test
@@ -54,13 +53,13 @@ public class PostLoginTest extends BaseClass<PostLogin> {
         model.setPassword(properties.getProperty("password"));
         model.setEmail(faker.internet().emailAddress());
 
-        given().
-                contentType(ContentType.JSON).
-                body(model).
-        when().
-                post(api).
-        then().
-                statusCode(400);
+        given()
+            .contentType(ContentType.JSON)
+            .body(model)
+        .when()
+            .post(api)
+        .then()
+            .statusCode(400);
     }
 
     @Test
@@ -68,13 +67,13 @@ public class PostLoginTest extends BaseClass<PostLogin> {
         model.setPassword(faker.internet().password());
         model.setEmail(properties.getProperty("email"));
 
-        given().
-                contentType(ContentType.JSON).
-                body(model).
-        when().
-                post(api).
-        then().
-                statusCode(400);
+        given()
+            .contentType(ContentType.JSON)
+            .body(model)
+        .when()
+            .post(api)
+        .then()
+            .statusCode(400);
     }
 
     @Test
@@ -82,13 +81,13 @@ public class PostLoginTest extends BaseClass<PostLogin> {
         model.setPassword(faker.internet().password());
         model.setEmail(faker.internet().emailAddress());
 
-        given().
-                contentType(ContentType.JSON).
-                body(model).
-        when().
-                post(api).
-        then().
-                statusCode(400);
+        given()
+            .contentType(ContentType.JSON)
+            .body(model)
+        .when()
+            .post(api)
+        .then()
+            .statusCode(400);
     }
 
     @Test
@@ -96,15 +95,12 @@ public class PostLoginTest extends BaseClass<PostLogin> {
         model.setPassword(faker.internet().password());
         model.setEmail(faker.internet().emailAddress());
 
-        Response response =
-            given().
-                    contentType(ContentType.JSON).
-                    body(model).
-            when().
-                    post(api).
-            then().
-                    extract().response();
-
-        assert(response.path("Error").equals("Invalid credentials"));
+        given()
+            .contentType(ContentType.JSON)
+            .body(model)
+        .when()
+            .post(api)
+        .then()
+            .extract().response().path("Error").equals("Invalid credentials");
     }
 }
