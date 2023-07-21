@@ -8,7 +8,8 @@ import tests.BaseClass;
 
 import static io.restassured.RestAssured.given;
 
-public class PutUsersUpdateTest extends BaseClass<PutUsersUpdate> {
+public class PutUsersUpdateTest extends BaseClass {
+    private PutUsersUpdate model;
     private static String endpoint = "putUpdateUser";
 
     public PutUsersUpdateTest() {
@@ -16,8 +17,8 @@ public class PutUsersUpdateTest extends BaseClass<PutUsersUpdate> {
     }
 
     @Override
-    protected PutUsersUpdate createEndpointInstance() {
-        return new PutUsersUpdate();
+    protected void createEndpointInstance() {
+        model = new PutUsersUpdate();
     }
 
     @Test

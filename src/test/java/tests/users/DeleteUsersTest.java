@@ -1,21 +1,15 @@
 package tests.users;
 
-import models.requestModels.users.DeleteUsers;
 import org.testng.annotations.Test;
 import tests.BaseClass;
 
 import static io.restassured.RestAssured.given;
 
-public class DeleteUsersTest extends BaseClass<DeleteUsers> {
+public class DeleteUsersTest extends BaseClass {
     private static String endpoint = "deleteUser";
 
     public DeleteUsersTest() {
         super(endpoint);
-    }
-
-    @Override
-    protected DeleteUsers createEndpointInstance() {
-        return new DeleteUsers();
     }
 
     @Test

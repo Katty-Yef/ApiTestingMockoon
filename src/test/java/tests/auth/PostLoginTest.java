@@ -8,7 +8,8 @@ import static io.restassured.RestAssured.given;
 
 import io.restassured.http.ContentType;
 
-public class PostLoginTest extends BaseClass<PostLogin> {
+public class PostLoginTest extends BaseClass {
+    private PostLogin model;
     private static String endpoint = "postLogin";
 
     public PostLoginTest() {
@@ -16,8 +17,8 @@ public class PostLoginTest extends BaseClass<PostLogin> {
     }
 
     @Override
-    protected PostLogin createEndpointInstance() {
-        return new PostLogin();
+    protected void createEndpointInstance() {
+        model = new PostLogin();
     }
 
     @Test

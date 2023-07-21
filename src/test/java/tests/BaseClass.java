@@ -16,11 +16,7 @@ import java.util.logging.Logger;
 
 import static io.restassured.RestAssured.given;
 
-public abstract class BaseClass<T> {
-
-    protected abstract T createEndpointInstance();
-
-    protected T model;
+public abstract class BaseClass {
     protected String endpoint;
     protected String api;
     protected static Properties properties;
@@ -45,6 +41,18 @@ public abstract class BaseClass<T> {
         }
     }
 
+    @BeforeMethod
+    public void setUpEach() {
+        LOGGER.info("Test method is started");
+        createEndpointInstance();
+        api = properties.getProperty("baseUrl") + properties.getProperty(endpoint);
+    }
+
+    @AfterClass
+    public void tearDown() {
+        LOGGER.info("Test class is finished");
+    }
+
     protected String getToken() {
         PostLogin postLogin = new PostLogin();
         postLogin.setPassword(properties.getProperty("password"));
@@ -53,23 +61,15 @@ public abstract class BaseClass<T> {
         Response response = given()
             .contentType(ContentType.JSON)
             .body(postLogin)
-        .when()
+            .when()
             .post(properties.getProperty("baseUrl") + properties.getProperty("postLogin"))
-        .then()
+            .then()
             .extract().response();
 
         return "Bearer " + response.path("accessToken");
     }
 
-    @BeforeMethod
-    public void setUpEach() {
-        LOGGER.info("Test method is started");
-        model = createEndpointInstance();
-        api = properties.getProperty("baseUrl") + properties.getProperty(endpoint);
-    }
+    protected void createEndpointInstance() {
 
-    @AfterClass
-    public void tearDown() {
-        LOGGER.info("Test class is finished");
     }
 }

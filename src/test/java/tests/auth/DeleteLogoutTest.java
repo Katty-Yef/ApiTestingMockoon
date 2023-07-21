@@ -1,21 +1,15 @@
 package tests.auth;
 
 import tests.BaseClass;
-import models.requestModels.auth.DeleteLogout;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
 
-public class DeleteLogoutTest extends BaseClass<DeleteLogout> {
+public class DeleteLogoutTest extends BaseClass {
     private static String endpoint = "deleteLogout";
 
     public DeleteLogoutTest() {
         super(endpoint);
-    }
-
-    @Override
-    protected DeleteLogout createEndpointInstance() {
-        return new DeleteLogout();
     }
 
     @Test

@@ -8,8 +8,8 @@ import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
 
-public class PostUsersCreateTest extends BaseClass<PostUsersCreate> {
-
+public class PostUsersCreateTest extends BaseClass {
+    private PostUsersCreate model;
     private static String endpoint = "postCreateUser";
 
     public PostUsersCreateTest() {
@@ -17,8 +17,8 @@ public class PostUsersCreateTest extends BaseClass<PostUsersCreate> {
     }
 
     @Override
-    protected PostUsersCreate createEndpointInstance() {
-        return new PostUsersCreate();
+    protected void createEndpointInstance() {
+        model = new PostUsersCreate();
     }
 
     @Test

@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class User {
+public class GetUsersResponse {
     public String id;
     public String firstName;
     public String lastName;
