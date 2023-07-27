@@ -59,12 +59,12 @@ public abstract class BaseClass {
         postLogin.setEmail(properties.getProperty("email"));
 
         Response response = given()
-            .contentType(ContentType.JSON)
-            .body(postLogin)
+                .contentType(ContentType.JSON)
+                .body(postLogin)
             .when()
-            .post(properties.getProperty("baseUrl") + properties.getProperty("postLogin"))
+                .post(properties.getProperty("baseUrl") + properties.getProperty("postLogin"))
             .then()
-            .extract().response();
+                .extract().response();
 
         return "Bearer " + response.path("accessToken");
     }

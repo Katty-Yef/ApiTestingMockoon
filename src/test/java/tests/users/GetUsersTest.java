@@ -1,7 +1,7 @@
 package tests.users;
 
 import io.restassured.response.Response;
-import models.responseModels.users.GetUsersResponse;
+import models.responseModels.users.GetUsers;
 import org.testng.annotations.Test;
 import tests.BaseClass;
 
@@ -28,26 +28,26 @@ public class GetUsersTest extends BaseClass {
 
     @Test
     public void checkThatCorrectUsersAreReceivedInTheBody() {
-        List<GetUsersResponse> users = given()
+        List<GetUsers> users = given()
                 .header("Authorization", getToken())
             .when()
                 .get(api)
             .then()
-                .extract().response().jsonPath().getList("data", GetUsersResponse.class);
+                .extract().response().jsonPath().getList("data", GetUsers.class);
 
-        for (GetUsersResponse user : users) {
+        for (GetUsers user : users) {
             assert(user.email.contains("@"));
         }
     }
 
     @Test
     public void checkThatCorrectNumberOfUsersIsReceivedInTheBody() {
-        List<GetUsersResponse> users = given()
+        List<GetUsers> users = given()
                 .header("Authorization", getToken())
             .when()
                 .get(api)
             .then()
-                .extract().response().jsonPath().getList("data", GetUsersResponse.class);
+                .extract().response().jsonPath().getList("data", GetUsers.class);
 
         assert(users.size() == 10);
     }
@@ -61,7 +61,7 @@ public class GetUsersTest extends BaseClass {
             .then()
                 .extract().response();
 
-        List<GetUsersResponse> users = response.jsonPath().getList("data", GetUsersResponse.class);
+        List<GetUsers> users = response.jsonPath().getList("data", GetUsers.class);
 
         assert(response.path("totalCount").equals(users.size()));
     }
